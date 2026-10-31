@@ -16,12 +16,13 @@ struct ContentView: View {
             ResourceSidebar(editor: editor, presetStore: presetStore)
                 .navigationSplitViewColumnWidth(min: 260, ideal: 300, max: 360)
         } detail: {
-            HSplitView {
+            HStack(spacing: 0) {
                 EditorCanvas(editor: editor)
-                    .frame(minWidth: 440, idealWidth: 640)
+                    .frame(minWidth: 440, maxWidth: .infinity, maxHeight: .infinity)
                 if isInspectorPresented {
+                    Divider()
                     InspectorView(editor: editor)
-                        .frame(minWidth: 260, idealWidth: 300, maxWidth: 360)
+                        .frame(minWidth: 260, idealWidth: 300, maxWidth: 360, maxHeight: .infinity)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -243,8 +244,12 @@ private struct InspectorView: View {
 
             Divider()
 
-            ScrollView(.vertical, showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 0) {
+            ScrollViewReader { proxy in
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(alignment: .leading, spacing: 0) {
+                        Color.clear
+                            .frame(height: 0)
+                            .id(InspectorScrollAnchor.top)
                     if selectedTab == .folderStyle {
             InspectorSection("文件夹样式") {
                 Picker("底图", selection: $editor.document.folderStyle.baseIcon) {
@@ -298,11 +303,18 @@ private struct InspectorView: View {
                 LayerInspector(editor: editor, layer: editor.document.layers[index])
             }
                     }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .contentMargins(.all, 0, for: .scrollContent)
+                .onChange(of: editor.folderURL) { _, _ in
+                    proxy.scrollTo(InspectorScrollAnchor.top, anchor: .top)
+                }
+                .onChange(of: selectedTab) { _, _ in
+                    proxy.scrollTo(InspectorScrollAnchor.top, anchor: .top)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             }
-            .contentMargins(.all, 0, for: .scrollContent)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
@@ -320,6 +332,10 @@ private enum InspectorTab: String, CaseIterable, Identifiable {
         case .layers: "图层"
         }
     }
+}
+
+private enum InspectorScrollAnchor {
+    static let top = "inspector-scroll-top"
 }
 
 private struct LayerInspector: View {
