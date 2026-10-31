@@ -1,0 +1,38 @@
+name: FolderIconStudio
+options:
+  bundleIdPrefix: com.foldericonstudio
+  deploymentTarget:
+    macOS: "14.0"
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+targets:
+  FolderIconStudio:
+    type: application
+    platform: macOS
+    sources:
+      - path: Sources/FolderIconStudio
+    resources:
+      - path: Sources/FolderIconStudio/Resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.foldericonstudio.app
+        PRODUCT_NAME: Folder Icon Studio
+        GENERATE_INFOPLIST_FILE: YES
+        CODE_SIGN_ENTITLEMENTS: FolderIconStudio.entitlements
+    entitlements:
+      path: FolderIconStudio.entitlements
+    info:
+      path: FolderIconStudio-Info.plist
+      properties:
+        CFBundleDisplayName: Folder Icon Studio
+        LSApplicationCategoryType: public.app-category.productivity
+        NSScreenCaptureUsageDescription: 仅在你主动使用“从屏幕取色”时，Folder Icon Studio 会读取屏幕像素以获取颜色。
+        CFBundleURLTypes:
+          - CFBundleURLName: com.foldericonstudio.app
+            CFBundleURLSchemes:
+              - foldericonstudio
+        NSHumanReadableCopyright: Copyright © 2026 Folder Icon Studio.
+    scheme:
+      testTargets: []

@@ -1,0 +1,404 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0217112B2612BBA9FE51CA41 /* sf-symbols.json in Resources */ = {isa = PBXBuildFile; fileRef = 9B4BE1FAB7DA3009D600D182 /* sf-symbols.json */; };
+		02B6C4AFC6073942C2144E34 /* EmojiTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E18152B590EF795D3801C72 /* EmojiTextField.swift */; };
+		297D7CC0566B93143A2B3E22 /* SFSymbolCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3DAD1C32FC826685C9DD3C /* SFSymbolCatalog.swift */; };
+		6872D66E4108A791F8F1FF11 /* IconModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C76783922D3983094D6839 /* IconModels.swift */; };
+		7B2CA194B030AB05A2A46117 /* InspectorSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7BDA22E36DB700C7DAE26D /* InspectorSection.swift */; };
+		7C480EC61D772A98D6B1DB4D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E302B01A090354F151D29E /* ContentView.swift */; };
+		894D07B122F34C4EDCE835A0 /* SFSymbolLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0E5D171E086CB999FE4BC0 /* SFSymbolLibraryView.swift */; };
+		948CB8DB24ED75651D77A62F /* EditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065B860A66A6A9D69CE855D5 /* EditorViewModel.swift */; };
+		C3A5653F2BCEEDEC04E2FB5E /* IconServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2761999224A036799ED8510E /* IconServices.swift */; };
+		D79CF852FE1F91F5FF6995E8 /* FolderIconStudioApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFDA878C8624818224F4F14 /* FolderIconStudioApp.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		065B860A66A6A9D69CE855D5 /* EditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewModel.swift; sourceTree = "<group>"; };
+		2761999224A036799ED8510E /* IconServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconServices.swift; sourceTree = "<group>"; };
+		3A7BDA22E36DB700C7DAE26D /* InspectorSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorSection.swift; sourceTree = "<group>"; };
+		4EDEE4173A44B2BAE8004646 /* FolderIconStudio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FolderIconStudio.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F3DAD1C32FC826685C9DD3C /* SFSymbolCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSymbolCatalog.swift; sourceTree = "<group>"; };
+		6E18152B590EF795D3801C72 /* EmojiTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiTextField.swift; sourceTree = "<group>"; };
+		73C76783922D3983094D6839 /* IconModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconModels.swift; sourceTree = "<group>"; };
+		7B0E5D171E086CB999FE4BC0 /* SFSymbolLibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSymbolLibraryView.swift; sourceTree = "<group>"; };
+		8EFDA878C8624818224F4F14 /* FolderIconStudioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderIconStudioApp.swift; sourceTree = "<group>"; };
+		9B4BE1FAB7DA3009D600D182 /* sf-symbols.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "sf-symbols.json"; sourceTree = "<group>"; };
+		B5E302B01A090354F151D29E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0066D656473429742E256D68 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B5E302B01A090354F151D29E /* ContentView.swift */,
+				1061C8F86603A2F9F295A54B /* Components */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		022C3FBA86BE130C5FE4D8BF /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				2761999224A036799ED8510E /* IconServices.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		1061C8F86603A2F9F295A54B /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				6E18152B590EF795D3801C72 /* EmojiTextField.swift */,
+				3A7BDA22E36DB700C7DAE26D /* InspectorSection.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		10A66FDCC530F237B12AD8A5 /* SFSymbols */ = {
+			isa = PBXGroup;
+			children = (
+				4F3DAD1C32FC826685C9DD3C /* SFSymbolCatalog.swift */,
+				7B0E5D171E086CB999FE4BC0 /* SFSymbolLibraryView.swift */,
+			);
+			path = SFSymbols;
+			sourceTree = "<group>";
+		};
+		297690E4B06B8B2A4359C92C /* FolderIconStudio */ = {
+			isa = PBXGroup;
+			children = (
+				B4650366657AEB55D0BAA49C /* App */,
+				A0805582BD843BF6517C9F8B /* Features */,
+				4EF17498A5D0B333BD0CE9A5 /* Models */,
+				5B807E6EDB476A1E6AA2F249 /* Resources */,
+				022C3FBA86BE130C5FE4D8BF /* Services */,
+				49046E9BFCED07A41A0F5D3E /* ViewModels */,
+				0066D656473429742E256D68 /* Views */,
+			);
+			name = FolderIconStudio;
+			path = Sources/FolderIconStudio;
+			sourceTree = "<group>";
+		};
+		49046E9BFCED07A41A0F5D3E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				065B860A66A6A9D69CE855D5 /* EditorViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		4E2AFA6EF9829FCDDB3626AC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4EDEE4173A44B2BAE8004646 /* FolderIconStudio.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4EF17498A5D0B333BD0CE9A5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				73C76783922D3983094D6839 /* IconModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		5B807E6EDB476A1E6AA2F249 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9B4BE1FAB7DA3009D600D182 /* sf-symbols.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		9582CCC73204D317D57E7B5A = {
+			isa = PBXGroup;
+			children = (
+				297690E4B06B8B2A4359C92C /* FolderIconStudio */,
+				4E2AFA6EF9829FCDDB3626AC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A0805582BD843BF6517C9F8B /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				10A66FDCC530F237B12AD8A5 /* SFSymbols */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		B4650366657AEB55D0BAA49C /* App */ = {
+			isa = PBXGroup;
+			children = (
+				8EFDA878C8624818224F4F14 /* FolderIconStudioApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F7E542B979FE33B08373951B /* FolderIconStudio */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6B729E8A2B8FC56C35388890 /* Build configuration list for PBXNativeTarget "FolderIconStudio" */;
+			buildPhases = (
+				86125F1F7026F9E4FD52B20B /* Sources */,
+				7CA1F679D09FB656B5D9F2EF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FolderIconStudio;
+			packageProductDependencies = (
+			);
+			productName = FolderIconStudio;
+			productReference = 4EDEE4173A44B2BAE8004646 /* FolderIconStudio.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BE85A6F417E2789372F8311C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = 6AE62502283F5EEE30C684D1 /* Build configuration list for PBXProject "FolderIconStudio" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 9582CCC73204D317D57E7B5A;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 4E2AFA6EF9829FCDDB3626AC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F7E542B979FE33B08373951B /* FolderIconStudio */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7CA1F679D09FB656B5D9F2EF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0217112B2612BBA9FE51CA41 /* sf-symbols.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		86125F1F7026F9E4FD52B20B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7C480EC61D772A98D6B1DB4D /* ContentView.swift in Sources */,
+				948CB8DB24ED75651D77A62F /* EditorViewModel.swift in Sources */,
+				02B6C4AFC6073942C2144E34 /* EmojiTextField.swift in Sources */,
+				D79CF852FE1F91F5FF6995E8 /* FolderIconStudioApp.swift in Sources */,
+				6872D66E4108A791F8F1FF11 /* IconModels.swift in Sources */,
+				C3A5653F2BCEEDEC04E2FB5E /* IconServices.swift in Sources */,
+				7B2CA194B030AB05A2A46117 /* InspectorSection.swift in Sources */,
+				297D7CC0566B93143A2B3E22 /* SFSymbolCatalog.swift in Sources */,
+				894D07B122F34C4EDCE835A0 /* SFSymbolLibraryView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		62B799DB703157C6069EE3B6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = FolderIconStudio.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "FolderIconStudio-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.foldericonstudio.app;
+				PRODUCT_NAME = "Folder Icon Studio";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		66004352C6ED27319B750BA2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		F6CA5B6936754DC162DC97FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = FolderIconStudio.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "FolderIconStudio-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.foldericonstudio.app;
+				PRODUCT_NAME = "Folder Icon Studio";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		FCA3613D936638B26851F46D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6AE62502283F5EEE30C684D1 /* Build configuration list for PBXProject "FolderIconStudio" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				66004352C6ED27319B750BA2 /* Debug */,
+				FCA3613D936638B26851F46D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		6B729E8A2B8FC56C35388890 /* Build configuration list for PBXNativeTarget "FolderIconStudio" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F6CA5B6936754DC162DC97FC /* Debug */,
+				62B799DB703157C6069EE3B6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BE85A6F417E2789372F8311C /* Project object */;
+}
