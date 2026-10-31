@@ -228,10 +228,24 @@ private struct PreviewImage: View {
 
 private struct InspectorView: View {
     @ObservedObject var editor: EditorViewModel
+    @State private var selectedTab: InspectorTab = .folderStyle
 
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 0) {
+        VStack(spacing: 0) {
+            Picker("属性标签", selection: $selectedTab) {
+                ForEach(InspectorTab.allCases) { tab in
+                    Text(tab.title).tag(tab)
+                }
+            }
+            .labelsHidden()
+            .pickerStyle(.segmented)
+            .padding(12)
+
+            Divider()
+
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(alignment: .leading, spacing: 0) {
+                    if selectedTab == .folderStyle {
             InspectorSection("文件夹样式") {
                 Picker("底图", selection: $editor.document.folderStyle.baseIcon) {
                     ForEach(FolderBaseIcon.allCases) { baseIcon in
@@ -280,7 +294,9 @@ private struct InspectorView: View {
                     Text("不透明度")
                 }
             }
+                    }
 
+                    if selectedTab == .layers {
             InspectorSection("图层") {
                 ForEach(editor.document.layers.indices, id: \.self) { index in
                     Button {
@@ -309,11 +325,28 @@ private struct InspectorView: View {
             if let index = editor.selectedLayerIndex {
                 LayerInspector(editor: editor, layer: editor.document.layers[index])
             }
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .contentMargins(.all, 0, for: .scrollContent)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
-        .contentMargins(.all, 0, for: .scrollContent)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    }
+}
+
+private enum InspectorTab: String, CaseIterable, Identifiable {
+    case folderStyle
+    case layers
+
+    var id: String { rawValue }
+
+    var title: String {
+        switch self {
+        case .folderStyle: "文件夹样式"
+        case .layers: "图层"
+        }
     }
 }
 
