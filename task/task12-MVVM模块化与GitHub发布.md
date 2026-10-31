@@ -20,3 +20,15 @@
 - 模型、服务、视图模型、视图按功能目录组织。
 - README 可以独立说明如何构建和使用项目。
 - 首次提交已推送到公开 GitHub 仓库。
+
+## 完成结果
+
+- 已按 MVVM 职责拆分为 `App`、`Models`、`Services`、`ViewModels`、`Views`、`Features/SFSymbols` 模块。
+- `EditorViewModel` 已从主界面中提取；视图只负责状态绑定与 UI 呈现。
+- 已新增 `README.md`，包含功能、架构、要求、构建、测试与隐私说明。
+- 已新增 `.gitignore`，并初始化本地 Git 仓库；首次提交为 `f089a4d`。
+- `swift test` 通过 19 项测试，Xcode Debug App 构建成功。
+
+## 发布阻塞
+
+当前环境没有 GitHub CLI 或 GitHub API 凭据，已授权的 GitHub 工具也不支持创建仓库。需提供一个空白公开仓库的 HTTPS URL，才能添加远程并推送首次提交。
