@@ -252,44 +252,16 @@ private struct InspectorView: View {
                         Text(baseIcon.displayName).tag(baseIcon)
                     }
                 }
-                ColorPicker("颜色", selection: Binding(
-                    get: { editor.document.folderStyle.color.color },
-                    set: { editor.setFolderColor(ColorValue($0), source: "color picker") }
-                ))
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("预设颜色")
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 30), spacing: 8)], spacing: 8) {
-                        ForEach(FolderColorPreset.all) { preset in
-                            Button {
-                                editor.setFolderColor(preset.color, source: "preset \(preset.name)")
-                            } label: {
-                                Circle()
-                                    .fill(preset.color.color)
-                                    .frame(width: 26, height: 26)
-                                    .overlay {
-                                        Circle().stroke(
-                                            editor.document.folderStyle.color == preset.color ? Color.primary : .clear,
-                                            lineWidth: 2
-                                        )
-                                    }
-                            }
-                            .buttonStyle(.plain)
-                            .help("\(preset.name) \(preset.color.hexRGB)")
-                            .accessibilityLabel("\(preset.name)，\(preset.color.hexRGB)")
-                        }
-                    }
-                }
-                Button {
-                    editor.sampleScreenColor()
-                } label: {
-                    Image(systemName: "eyedropper")
-                }
-                .buttonStyle(.bordered)
-                .help("从屏幕取色")
-                .accessibilityLabel("从屏幕取色")
-                Text("当前颜色：\(editor.document.folderStyle.color.hexRGB)")
-                    .font(.caption.monospaced())
-                    .foregroundStyle(.secondary)
+                ColorSelectionControl(
+                    title: "颜色",
+                    color: Binding(
+                        get: { editor.document.folderStyle.color },
+                        set: { editor.setFolderColor($0, source: "color control") }
+                    ),
+                    presets: FolderColorPreset.all,
+                    onScreenSample: { editor.sampleScreenColor() },
+                    showsHexValue: true
+                )
                 Slider(value: $editor.document.folderStyle.opacity, in: 0...1) {
                     Text("不透明度")
                 }
@@ -399,10 +371,13 @@ private struct LayerInspector: View {
                     get: { text.isItalic },
                     set: { editor.updateSelectedTextItalic($0) }
                 ))
-                ColorPicker("文字颜色", selection: Binding(
-                    get: { text.color.color },
-                    set: { editor.updateSelectedTextColor(ColorValue($0)) }
-                ))
+                ColorSelectionControl(
+                    title: "文字颜色",
+                    color: Binding(
+                        get: { text.color },
+                        set: { editor.updateSelectedTextColor($0) }
+                    )
+                )
             }
             HStack {
                 Text("大小")

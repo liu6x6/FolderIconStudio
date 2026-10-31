@@ -86,10 +86,13 @@ struct SFSymbolLibraryView: View {
                         Text(mode.displayName).tag(mode)
                     }
                 }
-                ColorPicker("Symbol 颜色", selection: Binding(
-                    get: { editor.selectedSymbolLayer?.color.color ?? .white },
-                    set: { editor.updateSelectedSymbolColor(ColorValue($0)) }
-                ))
+                ColorSelectionControl(
+                    title: "Symbol 颜色",
+                    color: Binding(
+                        get: { editor.selectedSymbolLayer?.color ?? ColorValue(red: 1, green: 1, blue: 1) },
+                        set: { editor.updateSelectedSymbolColor($0) }
+                    )
+                )
                 if editor.selectedSymbolLayer?.renderingMode == .multicolor {
                     Text("多彩模式会从所选颜色生成亮色与暗色 palette。")
                         .font(.caption)
