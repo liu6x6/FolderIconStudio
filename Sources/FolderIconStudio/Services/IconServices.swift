@@ -34,9 +34,15 @@ enum FolderIconError: LocalizedError {
 final class IconRenderer {
     static let shared = IconRenderer()
     private var folderImageCache: [FolderBaseIcon: NSImage] = [:]
+    private let renderedImageCache = NSCache<NSString, NSImage>()
 
     func render(document: IconDocument, pixelSize: CGFloat = 1024) throws -> NSImage {
         guard pixelSize > 0 else { throw FolderIconError.renderFailed }
+        let cacheKey = try renderCacheKey(document: document, pixelSize: pixelSize)
+        if let cachedImage = renderedImageCache.object(forKey: cacheKey as NSString) {
+            return cachedImage
+        }
+
         let image = NSImage(size: NSSize(width: pixelSize, height: pixelSize))
         image.lockFocus()
         defer { image.unlockFocus() }
@@ -51,7 +57,19 @@ final class IconRenderer {
         for layer in document.layers {
             draw(layer: layer, in: bounds)
         }
+        renderedImageCache.setObject(image, forKey: cacheKey as NSString)
         return image
+    }
+
+    func clearRenderedImageCache() {
+        renderedImageCache.removeAllObjects()
+    }
+
+    private func renderCacheKey(document: IconDocument, pixelSize: CGFloat) throws -> String {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.sortedKeys]
+        let documentData = try encoder.encode(document)
+        return "\(Int(pixelSize.rounded()))-\(documentData.base64EncodedString())"
     }
 
     private func drawFolderBase(in bounds: NSRect, style: FolderStyle) {

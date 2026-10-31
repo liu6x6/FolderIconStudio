@@ -115,6 +115,32 @@ final class ModelsTests: XCTestCase {
     }
 
     @MainActor
+    func testRendererCachesMatchingDocumentAndSize() throws {
+        let renderer = IconRenderer.shared
+        renderer.clearRenderedImageCache()
+        let document = IconDocument(layers: [.symbol(SymbolLayer(symbolName: "star.fill"))])
+
+        let first = try renderer.render(document: document, pixelSize: 128)
+        let second = try renderer.render(document: document, pixelSize: 128)
+
+        XCTAssertTrue(first === second)
+    }
+
+    @MainActor
+    func testRendererInvalidatesCacheWhenDocumentChanges() throws {
+        let renderer = IconRenderer.shared
+        renderer.clearRenderedImageCache()
+        let document = IconDocument(layers: [.symbol(SymbolLayer(symbolName: "star.fill"))])
+        var changedDocument = document
+        changedDocument.folderStyle.color = .orange
+
+        let original = try renderer.render(document: document, pixelSize: 128)
+        let changed = try renderer.render(document: changedDocument, pixelSize: 128)
+
+        XCTAssertFalse(original === changed)
+    }
+
+    @MainActor
     func testMonochromeSymbolColorChangesRenderedImage() throws {
         let transform = LayerTransform(centerX: 0.5, centerY: 0.53, scale: 0.55)
         let redDocument = IconDocument(layers: [
