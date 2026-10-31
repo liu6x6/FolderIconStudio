@@ -376,7 +376,10 @@ private struct LayerInspector: View {
                     color: Binding(
                         get: { text.color },
                         set: { editor.updateSelectedTextColor($0) }
-                    )
+                    ),
+                    presets: FolderColorPreset.all,
+                    onScreenSample: { editor.sampleScreenColorForSelectedText() },
+                    showsHexValue: true
                 )
             }
             HStack {

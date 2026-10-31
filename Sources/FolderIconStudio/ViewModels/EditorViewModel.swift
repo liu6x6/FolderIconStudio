@@ -186,10 +186,29 @@ final class EditorViewModel: ObservableObject {
     }
 
     func sampleScreenColor() {
+        sampleScreenColor { [weak self] color in
+            self?.setFolderColor(color, source: "screen sampler")
+        }
+    }
+
+    func sampleScreenColorForSelectedText() {
+        sampleScreenColor { [weak self] color in
+            self?.updateSelectedTextColor(color)
+        }
+    }
+
+    func sampleScreenColorForSelectedSymbol() {
+        sampleScreenColor { [weak self] color in
+            self?.updateSelectedSymbolColor(color)
+        }
+    }
+
+    private func sampleScreenColor(applying update: @escaping @MainActor (ColorValue) -> Void) {
         colorSampler.show { [weak self] color in
             guard let color else { return }
             Task { @MainActor in
-                self?.setFolderColor(ColorValue(color), source: "screen sampler")
+                guard self != nil else { return }
+                update(ColorValue(color))
             }
         }
     }
@@ -275,4 +294,3 @@ final class EditorViewModel: ObservableObject {
         }
     }
 }
-

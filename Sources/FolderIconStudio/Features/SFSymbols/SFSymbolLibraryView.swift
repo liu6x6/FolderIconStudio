@@ -91,7 +91,10 @@ struct SFSymbolLibraryView: View {
                     color: Binding(
                         get: { editor.selectedSymbolLayer?.color ?? ColorValue(red: 1, green: 1, blue: 1) },
                         set: { editor.updateSelectedSymbolColor($0) }
-                    )
+                    ),
+                    presets: FolderColorPreset.all,
+                    onScreenSample: { editor.sampleScreenColorForSelectedSymbol() },
+                    showsHexValue: true
                 )
                 if editor.selectedSymbolLayer?.renderingMode == .multicolor {
                     Text("多彩模式会从所选颜色生成亮色与暗色 palette。")
