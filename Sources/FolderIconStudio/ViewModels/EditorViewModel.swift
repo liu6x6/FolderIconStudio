@@ -5,15 +5,23 @@ import UniformTypeIdentifiers
 
 @MainActor
 final class EditorViewModel: ObservableObject {
-    @Published var document = IconDocument()
+    @Published var document = IconDocument() {
+        didSet {
+            registerDocumentChange(from: oldValue)
+        }
+    }
     @Published var folderURL: URL?
     @Published var selectedLayerID: UUID?
     @Published var message: String?
+    @Published private(set) var canUndo = false
+    @Published private(set) var canRedo = false
 
     private let finderService = FinderIconService()
     private let exportService = IconExportService()
     private let colorSampler = NSColorSampler()
     private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.foldericonstudio.app", category: "ColorSelection")
+    private let undoManager = UndoManager()
+    private var isRestoringDocument = false
     let availableFontFamilies: [String]
 
     init() {
@@ -33,6 +41,18 @@ final class EditorViewModel: ObservableObject {
             return nil
         }
         return symbol
+    }
+
+    func undo() {
+        guard undoManager.canUndo else { return }
+        undoManager.undo()
+        refreshUndoState()
+    }
+
+    func redo() {
+        guard undoManager.canRedo else { return }
+        undoManager.redo()
+        refreshUndoState()
     }
 
     func chooseFolder() {
@@ -292,5 +312,30 @@ final class EditorViewModel: ObservableObject {
         } catch {
             message = error.localizedDescription
         }
+    }
+
+    private func registerDocumentChange(from previousDocument: IconDocument) {
+        guard !isRestoringDocument, document != previousDocument else { return }
+        undoManager.registerUndo(withTarget: self) { target in
+            target.restoreDocument(previousDocument)
+        }
+        undoManager.setActionName("编辑图标")
+        refreshUndoState()
+    }
+
+    private func restoreDocument(_ restoredDocument: IconDocument) {
+        let currentDocument = document
+        isRestoringDocument = true
+        document = restoredDocument
+        isRestoringDocument = false
+        undoManager.registerUndo(withTarget: self) { target in
+            target.restoreDocument(currentDocument)
+        }
+        refreshUndoState()
+    }
+
+    private func refreshUndoState() {
+        canUndo = undoManager.canUndo
+        canRedo = undoManager.canRedo
     }
 }

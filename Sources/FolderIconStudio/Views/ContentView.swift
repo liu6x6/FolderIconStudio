@@ -42,6 +42,14 @@ struct ContentView: View {
                 Button(action: { showingSavePreset = true }) {
                     Label("保存模板", systemImage: "bookmark")
                 }
+                Button(action: editor.undo) {
+                    Label("撤销", systemImage: "arrow.uturn.backward")
+                }
+                .disabled(!editor.canUndo)
+                Button(action: editor.redo) {
+                    Label("重做", systemImage: "arrow.uturn.forward")
+                }
+                .disabled(!editor.canRedo)
             }
             ToolbarItemGroup(placement: .primaryAction) {
                 Menu {

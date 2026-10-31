@@ -232,4 +232,22 @@ final class ModelsTests: XCTestCase {
 
         XCTAssertEqual(editor.document.layers.map(\.id), [second.id, first.id])
     }
+
+    @MainActor
+    func testEditorUndoAndRedoRestoreDocumentSnapshots() {
+        let editor = EditorViewModel()
+        let initialDocument = editor.document
+
+        editor.addText()
+        let editedDocument = editor.document
+        XCTAssertNotEqual(editedDocument, initialDocument)
+        XCTAssertTrue(editor.canUndo)
+
+        editor.undo()
+        XCTAssertEqual(editor.document, initialDocument)
+        XCTAssertTrue(editor.canRedo)
+
+        editor.redo()
+        XCTAssertEqual(editor.document, editedDocument)
+    }
 }
