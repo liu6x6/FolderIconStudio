@@ -126,17 +126,44 @@ final class EditorViewModel: ObservableObject {
     }
 
     func deleteSelectedLayer() {
-        guard let selectedLayerIndex else { return }
+        guard let selectedLayerIndex, !document.layers[selectedLayerIndex].transform.isLocked else { return }
         document.layers.remove(at: selectedLayerIndex)
         selectedLayerID = nil
     }
 
     func moveSelectedLayer(by offset: Int) {
-        guard let index = selectedLayerIndex else { return }
+        guard let index = selectedLayerIndex, !document.layers[index].transform.isLocked else { return }
         let destination = index + offset
         guard document.layers.indices.contains(destination) else { return }
         let layer = document.layers.remove(at: index)
         document.layers.insert(layer, at: destination)
+    }
+
+    func duplicateSelectedLayer() {
+        guard let index = selectedLayerIndex, !document.layers[index].transform.isLocked else { return }
+        let layer = document.layers[index]
+        let duplicate: IconLayer
+        switch layer {
+        case .symbol(let symbol):
+            duplicate = .symbol(SymbolLayer(symbolName: symbol.symbolName, color: symbol.color, renderingMode: symbol.renderingMode, transform: symbol.transform))
+        case .emoji(let text):
+            duplicate = .emoji(TextLayer(text: text.text, color: text.color, fontFamily: text.fontFamily, fontWeight: text.fontWeight, isItalic: text.isItalic, transform: text.transform))
+        case .text(let text):
+            duplicate = .text(TextLayer(text: text.text, color: text.color, fontFamily: text.fontFamily, fontWeight: text.fontWeight, isItalic: text.isItalic, transform: text.transform))
+        case .image(let image):
+            duplicate = .image(ImageLayer(filePath: image.filePath, transform: image.transform))
+        }
+        document.layers.insert(duplicate, at: index + 1)
+        selectedLayerID = duplicate.id
+    }
+
+    func toggleSelectedLayerVisibility() {
+        updateSelectedTransform { $0.isVisible.toggle() }
+    }
+
+    func toggleSelectedLayerLock() {
+        guard let index = selectedLayerIndex else { return }
+        document.layers[index].transform.isLocked.toggle()
     }
 
     func applyToFinder() {
@@ -234,7 +261,7 @@ final class EditorViewModel: ObservableObject {
     }
 
     func updateSelectedTransform(_ update: (inout LayerTransform) -> Void) {
-        guard let index = selectedLayerIndex else { return }
+        guard let index = selectedLayerIndex, !document.layers[index].transform.isLocked else { return }
         var layer = document.layers[index]
         var transform = layer.transform
         update(&transform)

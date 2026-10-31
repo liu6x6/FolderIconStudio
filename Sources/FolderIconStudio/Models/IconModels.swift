@@ -150,11 +150,46 @@ struct FolderStyle: Codable, Equatable, Sendable {
 }
 
 struct LayerTransform: Codable, Equatable, Sendable {
-    var centerX: Double = 0.5
-    var centerY: Double = 0.53
-    var scale: Double = 0.45
-    var rotationDegrees: Double = 0
-    var opacity: Double = 1
+    var centerX: Double
+    var centerY: Double
+    var scale: Double
+    var rotationDegrees: Double
+    var opacity: Double
+    var isVisible: Bool
+    var isLocked: Bool
+
+    init(
+        centerX: Double = 0.5,
+        centerY: Double = 0.53,
+        scale: Double = 0.45,
+        rotationDegrees: Double = 0,
+        opacity: Double = 1,
+        isVisible: Bool = true,
+        isLocked: Bool = false
+    ) {
+        self.centerX = centerX
+        self.centerY = centerY
+        self.scale = scale
+        self.rotationDegrees = rotationDegrees
+        self.opacity = opacity
+        self.isVisible = isVisible
+        self.isLocked = isLocked
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case centerX, centerY, scale, rotationDegrees, opacity, isVisible, isLocked
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        centerX = try container.decodeIfPresent(Double.self, forKey: .centerX) ?? 0.5
+        centerY = try container.decodeIfPresent(Double.self, forKey: .centerY) ?? 0.53
+        scale = try container.decodeIfPresent(Double.self, forKey: .scale) ?? 0.45
+        rotationDegrees = try container.decodeIfPresent(Double.self, forKey: .rotationDegrees) ?? 0
+        opacity = try container.decodeIfPresent(Double.self, forKey: .opacity) ?? 1
+        isVisible = try container.decodeIfPresent(Bool.self, forKey: .isVisible) ?? true
+        isLocked = try container.decodeIfPresent(Bool.self, forKey: .isLocked) ?? false
+    }
 }
 
 struct SymbolLayer: Codable, Equatable, Identifiable, Sendable {
@@ -333,9 +368,9 @@ enum IconLayer: Codable, Equatable, Identifiable, Sendable {
     var transform: LayerTransform {
         get {
             switch self {
-            case .symbol(let layer): layer.transform
-            case .emoji(let layer), .text(let layer): layer.transform
-            case .image(let layer): layer.transform
+            case .symbol(let layer): return layer.transform
+            case .emoji(let layer), .text(let layer): return layer.transform
+            case .image(let layer): return layer.transform
             }
         }
         set {
@@ -353,6 +388,16 @@ enum IconLayer: Codable, Equatable, Identifiable, Sendable {
                 layer.transform = newValue
                 self = .image(layer)
             }
+        }
+
+    }
+
+    var iconName: String {
+        switch self {
+        case .symbol: "sparkles"
+        case .emoji: "face.smiling"
+        case .text: "textformat"
+        case .image: "photo"
         }
     }
 }

@@ -55,7 +55,9 @@ final class IconRenderer {
         drawFolderBase(in: bounds, style: document.folderStyle)
 
         for layer in document.layers {
-            draw(layer: layer, in: bounds)
+            if layer.transform.isVisible {
+                draw(layer: layer, in: bounds)
+            }
         }
         renderedImageCache.setObject(image, forKey: cacheKey as NSString)
         return image

@@ -206,6 +206,35 @@ final class ModelsTests: XCTestCase {
     }
 
     @MainActor
+    func testHiddenLayerDoesNotRender() throws {
+        var hiddenTransform = LayerTransform()
+        hiddenTransform.isVisible = false
+        let visibleDocument = IconDocument(layers: [.symbol(SymbolLayer(symbolName: "star.fill"))])
+        let hiddenDocument = IconDocument(layers: [
+            .symbol(SymbolLayer(symbolName: "star.fill", transform: hiddenTransform))
+        ])
+
+        let visible = try IconRenderer.shared.render(document: visibleDocument, pixelSize: 128)
+        let hidden = try IconRenderer.shared.render(document: hiddenDocument, pixelSize: 128)
+        XCTAssertNotEqual(visible.tiffRepresentation, hidden.tiffRepresentation)
+    }
+
+    @MainActor
+    func testLockedLayerCannotBeDeletedOrDuplicated() {
+        var transform = LayerTransform()
+        transform.isLocked = true
+        let layer = IconLayer.symbol(SymbolLayer(symbolName: "star.fill", transform: transform))
+        let editor = EditorViewModel()
+        editor.document.layers = [layer]
+        editor.selectedLayerID = layer.id
+
+        editor.duplicateSelectedLayer()
+        editor.deleteSelectedLayer()
+
+        XCTAssertEqual(editor.document.layers, [layer])
+    }
+
+    @MainActor
     func testTextColorChangesRenderedImage() throws {
         let transform = LayerTransform(centerX: 0.5, centerY: 0.53, scale: 0.55)
         let redDocument = IconDocument(layers: [

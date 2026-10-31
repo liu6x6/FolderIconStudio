@@ -362,8 +362,18 @@ private struct InspectorView: View {
                         editor.selectedLayerID = editor.document.layers[index].id
                     } label: {
                         HStack {
+                            Image(systemName: editor.document.layers[index].iconName)
+                                .foregroundStyle(.secondary)
                             Text(editor.document.layers[index].title).lineLimit(1)
                             Spacer()
+                            if !editor.document.layers[index].transform.isVisible {
+                                Image(systemName: "eye.slash")
+                                    .foregroundStyle(.secondary)
+                            }
+                            if editor.document.layers[index].transform.isLocked {
+                                Image(systemName: "lock.fill")
+                                    .foregroundStyle(.secondary)
+                            }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.vertical, 4)
@@ -559,6 +569,18 @@ private struct LayerActionsSection: View {
     var body: some View {
         InspectorSection("图层操作") {
             HStack {
+                Button(action: editor.duplicateSelectedLayer) {
+                    Image(systemName: "plus.square.on.square")
+                }
+                .help("复制图层")
+                Button(action: editor.toggleSelectedLayerVisibility) {
+                    Image(systemName: editor.selectedLayerIndex.map { editor.document.layers[$0].transform.isVisible } == true ? "eye" : "eye.slash")
+                }
+                .help("显示或隐藏图层")
+                Button(action: editor.toggleSelectedLayerLock) {
+                    Image(systemName: editor.selectedLayerIndex.map { editor.document.layers[$0].transform.isLocked } == true ? "lock.fill" : "lock.open")
+                }
+                .help("锁定或解锁图层")
                 Button {
                     editor.moveSelectedLayer(by: -1)
                 } label: {
