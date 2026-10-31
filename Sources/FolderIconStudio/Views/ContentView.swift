@@ -8,6 +8,7 @@ struct ContentView: View {
     @State private var showingSavePreset = false
     @State private var presetName = ""
     @State private var confirmingRestore = false
+    @State private var showingExportOptions = false
     @State private var isInspectorPresented = true
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
 
@@ -35,7 +36,7 @@ struct ContentView: View {
                 }
                 Menu {
                     Button("导出 PNG", action: editor.exportPNG)
-                    Button("导出多尺寸 PNG", action: editor.exportPNGBatch)
+                    Button("导出多尺寸 PNG") { showingExportOptions = true }
                     Button("导出 ICNS", action: editor.exportICNS)
                 } label: {
                     Label("导出", systemImage: "square.and.arrow.up")
@@ -97,6 +98,53 @@ struct ContentView: View {
                 presetStore.save(name: name.isEmpty ? "未命名模板" : name, document: editor.document)
                 presetName = ""
             }
+            .sheet(isPresented: $showingExportOptions) {
+                ExportOptionsView(editor: editor)
+            }
+        }
+    }
+
+    private struct ExportOptionsView: View {
+        @Environment(\.dismiss) private var dismiss
+        @ObservedObject var editor: EditorViewModel
+        @State private var sizes: Set<Int> = [128, 256, 512, 1024]
+        @State private var transparentBackground = true
+
+        var body: some View {
+            VStack(alignment: .leading, spacing: 16) {
+                Text("多尺寸 PNG 导出").font(.title2.weight(.semibold))
+                PreviewImage(document: editor.document, size: 128)
+                    .frame(maxWidth: .infinity)
+                Text("尺寸")
+                ForEach([128, 256, 512, 1024], id: \.self) { size in
+                    Toggle("\(size) x \(size) px", isOn: Binding(
+                        get: { sizes.contains(size) },
+                        set: { selected in
+                            if selected {
+                                sizes.insert(size)
+                            } else {
+                                sizes.remove(size)
+                            }
+                        }
+                    ))
+                }
+                Toggle("透明背景", isOn: $transparentBackground)
+                HStack {
+                    Spacer()
+                    Button("取消") { dismiss() }
+                    Button("导出") {
+                        editor.exportPNGBatch(
+                            pixelSizes: sizes.sorted(),
+                            transparentBackground: transparentBackground
+                        )
+                        dismiss()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .disabled(sizes.isEmpty)
+                }
+            }
+            .padding(24)
+            .frame(width: 360)
         }
     }
 }

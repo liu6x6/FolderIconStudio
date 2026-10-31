@@ -227,7 +227,7 @@ final class EditorViewModel: ObservableObject {
         }
     }
 
-    func exportPNGBatch() {
+    func exportPNGBatch(pixelSizes: [Int] = [128, 256, 512, 1024], transparentBackground: Bool = true) {
         let panel = NSOpenPanel()
         panel.canChooseFiles = false
         panel.canChooseDirectories = true
@@ -238,10 +238,10 @@ final class EditorViewModel: ObservableObject {
             _ = try exportService.exportPNGs(
                 document: document,
                 to: directory,
-                pixelSizes: [128, 256, 512, 1024],
-                transparentBackground: true
+                pixelSizes: pixelSizes,
+                transparentBackground: transparentBackground
             )
-            message = "已导出 4 个 PNG 尺寸到“\(directory.lastPathComponent)”。"
+            message = "已导出 \(pixelSizes.count) 个 PNG 尺寸到“\(directory.lastPathComponent)”。"
         } catch {
             message = error.localizedDescription
         }
