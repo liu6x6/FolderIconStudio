@@ -392,6 +392,35 @@ final class PresetStore: ObservableObject {
         persist()
     }
 
+    func rename(_ preset: Preset, to name: String) {
+        guard let index = presets.firstIndex(where: { $0.id == preset.id }) else { return }
+        presets[index].name = name
+        persist()
+    }
+
+    func setCategory(_ category: String, for preset: Preset) {
+        guard let index = presets.firstIndex(where: { $0.id == preset.id }) else { return }
+        presets[index].category = category
+        persist()
+    }
+
+    func filteredPresets(query: String, category: String?) -> [Preset] {
+        presets.filter { preset in
+            (category == nil || preset.category == category)
+                && (query.isEmpty || preset.name.localizedCaseInsensitiveContains(query))
+        }
+    }
+
+    func export(_ preset: Preset, to url: URL) throws {
+        try JSONEncoder().encode(preset).write(to: url, options: .atomic)
+    }
+
+    func `import`(from url: URL) throws {
+        let preset = try JSONDecoder().decode(Preset.self, from: Data(contentsOf: url))
+        presets.append(Preset(name: preset.name, category: preset.category, document: preset.document))
+        persist()
+    }
+
     private func persist() {
         guard let data = try? JSONEncoder().encode(presets) else { return }
         UserDefaults.standard.set(data, forKey: defaultsKey)

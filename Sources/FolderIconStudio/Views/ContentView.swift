@@ -152,6 +152,8 @@ struct ContentView: View {
 private struct ResourceSidebar: View {
     @ObservedObject var editor: EditorViewModel
     @ObservedObject var presetStore: PresetStore
+    @State private var presetQuery = ""
+    @State private var presetCategory = "全部"
     private let emojis = ["📁", "💼", "⭐️", "🎨", "📷", "🚀"]
 
     var body: some View {
@@ -203,6 +205,13 @@ private struct ResourceSidebar: View {
                 }
 
                 SidebarSection("预设模板", systemImage: "bookmark.fill") {
+                    TextField("搜索模板", text: $presetQuery)
+                    Picker("分类", selection: $presetCategory) {
+                        Text("全部").tag("全部")
+                        ForEach(presetCategories, id: \.self) { category in
+                            Text(category).tag(category)
+                        }
+                    }
                     if presetStore.presets.isEmpty {
                         Text("保存设计后会显示在这里。")
                             .font(.caption)
@@ -213,7 +222,7 @@ private struct ResourceSidebar: View {
                                 columns: Array(repeating: GridItem(.fixed(50), spacing: 8), count: 5),
                                 spacing: 8
                             ) {
-                                ForEach(presetStore.presets) { preset in
+                                ForEach(filteredPresets) { preset in
                                     PresetTile(preset: preset) {
                                         editor.document = preset.document
                                         editor.selectedLayerID = nil
@@ -230,6 +239,17 @@ private struct ResourceSidebar: View {
         }
         .contentMargins(.all, 12, for: .scrollContent)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    }
+
+    private var presetCategories: [String] {
+        Array(Set(presetStore.presets.map(\.category))).sorted()
+    }
+
+    private var filteredPresets: [Preset] {
+        presetStore.filteredPresets(
+            query: presetQuery,
+            category: presetCategory == "全部" ? nil : presetCategory
+        )
     }
 }
 
