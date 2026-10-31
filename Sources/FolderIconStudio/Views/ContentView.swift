@@ -14,7 +14,7 @@ struct ContentView: View {
     var body: some View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
             ResourceSidebar(editor: editor, presetStore: presetStore)
-                .navigationSplitViewColumnWidth(min: 260, ideal: 300, max: 360)
+                .navigationSplitViewColumnWidth(min: 380, ideal: 400, max: 440)
         } detail: {
             HStack(spacing: 0) {
                 EditorCanvas(editor: editor)
@@ -27,7 +27,7 @@ struct ContentView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        .frame(minWidth: 1_020, minHeight: 620)
+        .frame(minWidth: 1_120, minHeight: 620)
         .toolbar {
             ToolbarItemGroup(placement: .navigation) {
                 Button(action: editor.chooseFolder) {
@@ -98,11 +98,13 @@ private struct ResourceSidebar: View {
     private let emojis = ["📁", "💼", "⭐️", "🎨", "📷", "🚀"]
 
     var body: some View {
-        List {
-            Section("当前文件夹") {
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack(alignment: .leading, spacing: 16) {
+                SidebarSection("当前文件夹", systemImage: "folder.fill") {
                 if let folderURL = editor.folderURL {
                     VStack(alignment: .leading, spacing: 4) {
                         Label(folderURL.lastPathComponent, systemImage: "folder.fill")
+                            .font(.subheadline.weight(.semibold))
                         Text(folderURL.path)
                             .font(.caption2.monospaced())
                             .foregroundStyle(.secondary)
@@ -113,45 +115,110 @@ private struct ResourceSidebar: View {
                 } else {
                     ContentUnavailableView("尚未选择文件夹", systemImage: "folder.badge.question")
                 }
-            }
+                }
 
-            Section("预设模板") {
-                ForEach(presetStore.presets) { preset in
-                    Button(preset.name) {
-                        editor.document = preset.document
-                        editor.selectedLayerID = nil
-                    }
-                    .contextMenu {
-                        Button("删除模板", role: .destructive) {
-                            presetStore.remove(preset)
+                SidebarSection("预设模板", systemImage: "bookmark.fill") {
+                    if presetStore.presets.isEmpty {
+                        Text("保存设计后会显示在这里。")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    } else {
+                        ScrollView(.vertical, showsIndicators: false) {
+                            LazyVGrid(
+                                columns: Array(repeating: GridItem(.fixed(60), spacing: 8), count: 5),
+                                spacing: 8
+                            ) {
+                                ForEach(presetStore.presets) { preset in
+                                    PresetTile(preset: preset) {
+                                        editor.document = preset.document
+                                        editor.selectedLayerID = nil
+                                    } onDelete: {
+                                        presetStore.remove(preset)
+                                    }
+                                }
+                            }
                         }
+                        .frame(height: 136)
                     }
                 }
-                if presetStore.presets.isEmpty {
-                    Text("保存设计后会显示在这里。")
-                        .foregroundStyle(.secondary)
+
+                SidebarSection("符号图标", systemImage: "sparkles") {
+                    ScrollView(.vertical, showsIndicators: false) {
+                        SFSymbolLibraryView(editor: editor)
+                    }
+                    .frame(height: 320)
                 }
-            }
 
-            Section("符号图标") {
-                SFSymbolLibraryView(editor: editor)
-            }
-
-            Section("Emoji") {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 34))], spacing: 8) {
+                SidebarSection("Emoji", systemImage: "face.smiling") {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 34))], spacing: 8) {
                     ForEach(emojis, id: \.self) { emoji in
                         Button(emoji) { editor.addEmoji(emoji) }
                             .buttonStyle(.borderless)
                     }
                 }
-            }
+                }
 
-            Section("添加图层") {
-                Button("添加文字", systemImage: "textformat") { editor.addText() }
-                Button("导入图片", systemImage: "photo") { editor.importImage() }
+                SidebarSection("添加图层", systemImage: "plus.circle.fill") {
+                    Button("添加文字", systemImage: "textformat") { editor.addText() }
+                        .buttonStyle(.borderedProminent)
+                    Button("导入图片", systemImage: "photo") { editor.importImage() }
+                        .buttonStyle(.bordered)
+                }
             }
         }
-        .listStyle(.sidebar)
+        .contentMargins(.all, 12, for: .scrollContent)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    }
+}
+
+private struct SidebarSection<Content: View>: View {
+    let title: String
+    let systemImage: String
+    @ViewBuilder let content: Content
+
+    init(_ title: String, systemImage: String, @ViewBuilder content: () -> Content) {
+        self.title = title
+        self.systemImage = systemImage
+        self.content = content()
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Label(title, systemImage: systemImage)
+                .font(.caption.weight(.bold))
+                .foregroundStyle(.tint)
+            VStack(alignment: .leading, spacing: 10) {
+                content
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(10)
+            .background(.quaternary, in: RoundedRectangle(cornerRadius: 10))
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+private struct PresetTile: View {
+    let preset: Preset
+    let onSelect: () -> Void
+    let onDelete: () -> Void
+
+    var body: some View {
+        Button(action: onSelect) {
+            PreviewImage(document: preset.document, size: 52)
+                .frame(width: 60, height: 60)
+                .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 8))
+                .overlay {
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(.secondary.opacity(0.25), lineWidth: 1)
+                }
+        }
+        .buttonStyle(.plain)
+        .help(preset.name)
+        .accessibilityLabel("应用模板 \(preset.name)")
+        .contextMenu {
+            Button("删除模板", role: .destructive, action: onDelete)
+        }
     }
 }
 
