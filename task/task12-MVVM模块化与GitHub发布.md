@@ -29,6 +29,6 @@
 - 已新增 `.gitignore`，并初始化本地 Git 仓库；首次提交为 `f089a4d`。
 - `swift test` 通过 19 项测试，Xcode Debug App 构建成功。
 
-## 发布阻塞
+## 发布结果
 
-当前环境没有 GitHub CLI 或 GitHub API 凭据，已授权的 GitHub 工具也不支持创建仓库。需提供一个空白公开仓库的 HTTPS URL，才能添加远程并推送首次提交。
+已通过配置的 SSH key 推送至公开仓库：<git@github.com:liu6x6/FolderIconStudio.git>。
