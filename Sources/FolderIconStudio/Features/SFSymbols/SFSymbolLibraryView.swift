@@ -45,10 +45,15 @@ struct SFSymbolLibraryView: View {
             .font(.caption)
             .foregroundStyle(.secondary)
 
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 34))], spacing: 8) {
+        LazyVGrid(
+            columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 6),
+            spacing: 8
+        ) {
             ForEach(displayedSymbols, id: \.self) { symbol in
                 Button { _ = editor.addSymbol(symbol) } label: {
-                    Image(systemName: symbol).frame(width: 26, height: 26)
+                    Image(systemName: symbol)
+                        .font(.title3)
+                        .frame(maxWidth: .infinity, minHeight: 36)
                 }
                 .buttonStyle(.borderless)
                 .help(symbol)

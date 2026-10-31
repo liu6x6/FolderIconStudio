@@ -125,7 +125,7 @@ private struct ResourceSidebar: View {
                     } else {
                         ScrollView(.vertical, showsIndicators: false) {
                             LazyVGrid(
-                                columns: Array(repeating: GridItem(.fixed(60), spacing: 8), count: 5),
+                                columns: Array(repeating: GridItem(.fixed(50), spacing: 8), count: 5),
                                 spacing: 8
                             ) {
                                 ForEach(presetStore.presets) { preset in
@@ -138,7 +138,7 @@ private struct ResourceSidebar: View {
                                 }
                             }
                         }
-                        .frame(height: 136)
+                        .frame(height: 108)
                     }
                 }
 
@@ -150,10 +150,15 @@ private struct ResourceSidebar: View {
                 }
 
                 SidebarSection("Emoji", systemImage: "face.smiling") {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 34))], spacing: 8) {
+                    LazyVGrid(
+                        columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 6),
+                        spacing: 8
+                    ) {
                     ForEach(emojis, id: \.self) { emoji in
                         Button(emoji) { editor.addEmoji(emoji) }
                             .buttonStyle(.borderless)
+                            .font(.title2)
+                            .frame(maxWidth: .infinity, minHeight: 36)
                     }
                 }
                 }
@@ -191,8 +196,7 @@ private struct SidebarSection<Content: View>: View {
                 content
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(10)
-            .background(.quaternary, in: RoundedRectangle(cornerRadius: 10))
+            .padding(.leading, 2)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -205,9 +209,8 @@ private struct PresetTile: View {
 
     var body: some View {
         Button(action: onSelect) {
-            PreviewImage(document: preset.document, size: 52)
-                .frame(width: 60, height: 60)
-                .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 8))
+            PreviewImage(document: preset.document, size: 44)
+                .frame(width: 50, height: 50)
                 .overlay {
                     RoundedRectangle(cornerRadius: 8)
                         .stroke(.secondary.opacity(0.25), lineWidth: 1)
