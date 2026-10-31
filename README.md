@@ -6,6 +6,10 @@
 
 A native macOS app for designing and applying custom Finder folder icons. It uses SwiftUI and AppKit and supports folder colors, SF Symbols, emoji, text, images, and PNG/ICNS export.
 
+## Preview
+
+![Folder Icon Studio editor](Assets/screenshot.png)
+
 ## Features
 
 - Choose a writable Finder folder and apply a custom icon or restore its default icon.
