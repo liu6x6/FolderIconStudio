@@ -96,7 +96,9 @@ struct FolderColorPreset: Identifiable, Equatable, Sendable {
         FolderColorPreset(name: "鼠尾草绿", color: ColorValue(red: 0.39, green: 0.61, blue: 0.49)),
         FolderColorPreset(name: "青柠绿", color: ColorValue(red: 0.59, green: 0.69, blue: 0.18)),
         FolderColorPreset(name: "酒红色", color: ColorValue(red: 0.61, green: 0.20, blue: 0.29)),
-        FolderColorPreset(name: "板岩蓝", color: ColorValue(red: 0.29, green: 0.38, blue: 0.53))
+        FolderColorPreset(name: "板岩蓝", color: ColorValue(red: 0.29, green: 0.38, blue: 0.53)),
+        FolderColorPreset(name: "玫瑰金", color: ColorValue(red: 0.82, green: 0.53, blue: 0.46)),
+        FolderColorPreset(name: "薄荷绿", color: ColorValue(red: 0.33, green: 0.78, blue: 0.64))
     ]
 }
 
@@ -410,11 +412,25 @@ struct IconDocument: Codable, Equatable, Sendable {
 struct Preset: Codable, Identifiable, Equatable {
     let id: UUID
     var name: String
+    var category: String
     var document: IconDocument
 
-    init(id: UUID = UUID(), name: String, document: IconDocument) {
+    init(id: UUID = UUID(), name: String, category: String = "未分类", document: IconDocument) {
         self.id = id
         self.name = name
+        self.category = category
         self.document = document
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case id, name, category, document
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(UUID.self, forKey: .id)
+        name = try container.decode(String.self, forKey: .name)
+        category = try container.decodeIfPresent(String.self, forKey: .category) ?? "未分类"
+        document = try container.decode(IconDocument.self, forKey: .document)
     }
 }

@@ -27,7 +27,7 @@ final class ModelsTests: XCTestCase {
     }
 
     func testFolderColorPresetsHaveExpectedCountAndHexValues() {
-        XCTAssertEqual(FolderColorPreset.all.count, 16)
+        XCTAssertEqual(FolderColorPreset.all.count, 18)
         XCTAssertEqual(FolderColorPreset.all[0].color.hexRGB, "#2980D9")
         XCTAssertEqual(ColorValue(red: -1, green: 1.5, blue: 0.5).hexRGB, "#00FF80")
     }
