@@ -17,6 +17,5 @@ struct InspectorSection<Content: View>: View {
         }
         .padding(12)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(.regularMaterial)
     }
 }

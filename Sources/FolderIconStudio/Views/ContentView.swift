@@ -117,31 +117,6 @@ private struct ResourceSidebar: View {
                 }
                 }
 
-                SidebarSection("预设模板", systemImage: "bookmark.fill") {
-                    if presetStore.presets.isEmpty {
-                        Text("保存设计后会显示在这里。")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    } else {
-                        ScrollView(.vertical, showsIndicators: false) {
-                            LazyVGrid(
-                                columns: Array(repeating: GridItem(.fixed(50), spacing: 8), count: 5),
-                                spacing: 8
-                            ) {
-                                ForEach(presetStore.presets) { preset in
-                                    PresetTile(preset: preset) {
-                                        editor.document = preset.document
-                                        editor.selectedLayerID = nil
-                                    } onDelete: {
-                                        presetStore.remove(preset)
-                                    }
-                                }
-                            }
-                        }
-                        .frame(height: 108)
-                    }
-                }
-
                 SidebarSection("符号图标", systemImage: "sparkles") {
                     ScrollView(.vertical, showsIndicators: false) {
                         SFSymbolLibraryView(editor: editor)
@@ -168,6 +143,31 @@ private struct ResourceSidebar: View {
                         .buttonStyle(.borderedProminent)
                     Button("导入图片", systemImage: "photo") { editor.importImage() }
                         .buttonStyle(.bordered)
+                }
+
+                SidebarSection("预设模板", systemImage: "bookmark.fill") {
+                    if presetStore.presets.isEmpty {
+                        Text("保存设计后会显示在这里。")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    } else {
+                        ScrollView(.vertical, showsIndicators: false) {
+                            LazyVGrid(
+                                columns: Array(repeating: GridItem(.fixed(50), spacing: 8), count: 5),
+                                spacing: 8
+                            ) {
+                                ForEach(presetStore.presets) { preset in
+                                    PresetTile(preset: preset) {
+                                        editor.document = preset.document
+                                        editor.selectedLayerID = nil
+                                    } onDelete: {
+                                        presetStore.remove(preset)
+                                    }
+                                }
+                            }
+                        }
+                        .frame(height: 108)
+                    }
                 }
             }
         }
@@ -233,12 +233,16 @@ private struct EditorCanvas: View {
     var body: some View {
         VStack(spacing: 18) {
             if editor.folderURL == nil {
-                ContentUnavailableView {
-                    Label("拖入文件夹开始设计", systemImage: "folder.badge.plus")
-                } description: {
-                    Text("也可以使用工具栏中的“选择文件夹”。")
-                } actions: {
-                    Button("选择文件夹", action: editor.chooseFolder)
+                VStack(spacing: 8) {
+                    Button(action: editor.chooseFolder) {
+                        Image(systemName: "folder.badge.plus")
+                            .font(.largeTitle)
+                    }
+                    .buttonStyle(.plain)
+                    .help("选择文件夹")
+                    .accessibilityLabel("选择文件夹")
+                    Text("拖入文件夹开始设计")
+                        .font(.headline)
                 }
             }
 
@@ -391,15 +395,15 @@ private struct InspectorView: View {
 }
 
 private enum InspectorTab: String, CaseIterable, Identifiable {
-    case folderStyle
     case layers
+    case folderStyle
 
     var id: String { rawValue }
 
     var title: String {
         switch self {
-        case .folderStyle: "文件夹样式"
         case .layers: "图层"
+        case .folderStyle: "文件夹样式"
         }
     }
 }
