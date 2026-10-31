@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" fill="none">
+  <defs>
+    <linearGradient id="background" x1="148" y1="102" x2="888" y2="934" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#14213D"/>
+      <stop offset="0.52" stop-color="#254E8A"/>
+      <stop offset="1" stop-color="#4B2D7F"/>
+    </linearGradient>
+    <linearGradient id="folderTab" x1="216" y1="312" x2="608" y2="486" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#91E6FF"/>
+      <stop offset="1" stop-color="#3D9AF2"/>
+    </linearGradient>
+    <linearGradient id="folderBody" x1="168" y1="414" x2="825" y2="815" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5FC9FF"/>
+      <stop offset="0.48" stop-color="#347BE6"/>
+      <stop offset="1" stop-color="#6855D8"/>
+    </linearGradient>
+    <linearGradient id="swatch" x1="600" y1="510" x2="760" y2="730" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFB95D"/>
+      <stop offset="0.48" stop-color="#FF668B"/>
+      <stop offset="1" stop-color="#B653E6"/>
+    </linearGradient>
+    <filter id="shadow" x="75" y="115" width="874" height="813" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="30" stdDeviation="30" flood-color="#081329" flood-opacity=".35"/>
+    </filter>
+  </defs>
+
+  <rect x="64" y="64" width="896" height="896" rx="214" fill="url(#background)"/>
+  <path d="M64 746C183 837 339 896 512 896C685 896 841 837 960 746V746C960 864 864 960 746 960H278C160 960 64 864 64 746V746Z" fill="#6C48C4" fill-opacity=".26"/>
+  <circle cx="805" cy="225" r="92" fill="#7B5AE8" fill-opacity=".3"/>
+  <circle cx="202" cy="805" r="124" fill="#3BC5E7" fill-opacity=".18"/>
+
+  <g filter="url(#shadow)">
+    <path d="M176 388C176 345 211 310 254 310H439C463 310 485 322 500 342L548 406H770C813 406 848 441 848 484V712C848 755 813 790 770 790H254C211 790 176 755 176 712V388Z" fill="url(#folderTab)"/>
+    <path d="M176 466C176 423 211 388 254 388H770C813 388 848 423 848 466V712C848 755 813 790 770 790H254C211 790 176 755 176 712V466Z" fill="url(#folderBody)"/>
+    <path d="M176 495C176 452 211 417 254 417H770C813 417 848 452 848 495V535H176V495Z" fill="#C5F3FF" fill-opacity=".22"/>
+  </g>
+
+  <path d="M425 660L585 500C602 483 629 483 646 500L661 515C678 532 678 559 661 576L501 736L411 750L425 660Z" fill="url(#swatch)"/>
+  <path d="M598 503L636 465C653 448 680 448 697 465L722 490C739 507 739 534 722 551L684 589L598 503Z" fill="#E9F9FF"/>
+  <path d="M411 750L425 660L501 736L411 750Z" fill="#FFF2D7"/>
+  <path d="M584 517L646 579" stroke="white" stroke-opacity=".48" stroke-width="14" stroke-linecap="round"/>
+
+  <path d="M726 322L738 354L770 366L738 378L726 410L714 378L682 366L714 354L726 322Z" fill="#FFF5B7"/>
+  <path d="M812 411L819 430L838 437L819 444L812 463L805 444L786 437L805 430L812 411Z" fill="#C8F6FF"/>
+  <path d="M271 285L279 306L300 314L279 322L271 343L263 322L242 314L263 306L271 285Z" fill="#D6F8FF"/>
+</svg>

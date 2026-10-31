@@ -1,5 +1,9 @@
 # Folder Icon Studio
 
+<p align="center">
+  <img src="Assets/FolderIconStudio.svg" width="160" alt="Folder Icon Studio app icon">
+</p>
+
 A native macOS app for designing and applying custom Finder folder icons. It uses SwiftUI and AppKit and supports folder colors, SF Symbols, emoji, text, images, and PNG/ICNS export.
 
 ## Features
