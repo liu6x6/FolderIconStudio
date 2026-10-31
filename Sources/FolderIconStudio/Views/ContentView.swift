@@ -35,6 +35,7 @@ struct ContentView: View {
                 }
                 Menu {
                     Button("导出 PNG", action: editor.exportPNG)
+                    Button("导出多尺寸 PNG", action: editor.exportPNGBatch)
                     Button("导出 ICNS", action: editor.exportICNS)
                 } label: {
                     Label("导出", systemImage: "square.and.arrow.up")

@@ -263,18 +263,68 @@ final class FinderIconService {
 
 @MainActor
 final class IconExportService {
-    func exportPNG(document: IconDocument, to url: URL) throws {
+    func exportPNG(
+        document: IconDocument,
+        to url: URL,
+        pixelSize: CGFloat = 1024,
+        transparentBackground: Bool = true
+    ) throws {
         do {
-            let image = try IconRenderer.shared.render(document: document)
-            guard let tiff = image.tiffRepresentation,
-                  let bitmap = NSBitmapImageRep(data: tiff),
-                  let data = bitmap.representation(using: .png, properties: [:]) else {
-                throw FolderIconError.renderFailed
-            }
-            try data.write(to: url, options: .atomic)
+            try pngData(
+                document: document,
+                pixelSize: pixelSize,
+                transparentBackground: transparentBackground
+            ).write(to: url, options: .atomic)
         } catch {
             throw FolderIconError.exportFailed(url, error)
         }
+    }
+
+    func exportPNGs(
+        document: IconDocument,
+        to directory: URL,
+        pixelSizes: [Int],
+        transparentBackground: Bool
+    ) throws -> [URL] {
+        do {
+            try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+            return try pixelSizes.map { pixelSize in
+                let url = directory.appendingPathComponent("FolderIcon-\(pixelSize).png")
+                try pngData(
+                    document: document,
+                    pixelSize: CGFloat(pixelSize),
+                    transparentBackground: transparentBackground
+                ).write(to: url, options: .atomic)
+                return url
+            }
+        } catch {
+            throw FolderIconError.exportFailed(directory, error)
+        }
+    }
+
+    private func pngData(
+        document: IconDocument,
+        pixelSize: CGFloat,
+        transparentBackground: Bool
+    ) throws -> Data {
+        let image = try IconRenderer.shared.render(document: document, pixelSize: pixelSize)
+        let exportImage: NSImage
+        if transparentBackground {
+            exportImage = image
+        } else {
+            exportImage = NSImage(size: image.size)
+            exportImage.lockFocus()
+            NSColor.white.setFill()
+            NSRect(origin: .zero, size: image.size).fill()
+            image.draw(at: .zero, from: .zero, operation: .sourceOver, fraction: 1)
+            exportImage.unlockFocus()
+        }
+        guard let tiff = exportImage.tiffRepresentation,
+              let bitmap = NSBitmapImageRep(data: tiff),
+              let data = bitmap.representation(using: .png, properties: [:]) else {
+            throw FolderIconError.renderFailed
+        }
+        return data
     }
 
     func exportICNS(document: IconDocument, to url: URL) throws {

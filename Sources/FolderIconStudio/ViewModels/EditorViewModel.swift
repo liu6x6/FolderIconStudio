@@ -227,6 +227,26 @@ final class EditorViewModel: ObservableObject {
         }
     }
 
+    func exportPNGBatch() {
+        let panel = NSOpenPanel()
+        panel.canChooseFiles = false
+        panel.canChooseDirectories = true
+        panel.allowsMultipleSelection = false
+        panel.prompt = "导出"
+        guard panel.runModal() == .OK, let directory = panel.url else { return }
+        do {
+            _ = try exportService.exportPNGs(
+                document: document,
+                to: directory,
+                pixelSizes: [128, 256, 512, 1024],
+                transparentBackground: true
+            )
+            message = "已导出 4 个 PNG 尺寸到“\(directory.lastPathComponent)”。"
+        } catch {
+            message = error.localizedDescription
+        }
+    }
+
     func setFolderColor(_ color: ColorValue, source: String) {
         document.folderStyle.color = color
         logger.info("Folder color selected from \(source, privacy: .public): \(color.hexRGB, privacy: .public)")
